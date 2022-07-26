@@ -1,15 +1,37 @@
 """Provide the primary functions."""
-import os
 import numpy as np
 import matplotlib.pyplot as plt
 
-from mpl_toolkits.mplot3d import Axes3D
+from mpl_toolkits.mplot3d import (
+    Axes3D,
+)  # noqa: F401 #this comment is for telling flake8 to ignore line F401
 
 
-def calculate_distance(rA, rB):
+def calculate_distance(rA: np.ndarray, rB: np.ndarray) -> np.floating:
+    '''
+    Calculate the distance between two points.
+
+    Parameters
+    ----------
+    rA, rB : nd.nparray
+        The coordinates of each point.
+
+    Returns
+    -------
+    dist: np.floating
+        The distance between the two points.
+
+    Examples
+    --------
+    >>> r1 = np.array([0, 0, 0])
+    >>> r2 = np.array([0, 1.0, 0])
+    >>> calculate_distance(r1, r2)
+
+    
+    '''
     # This function calculates the distance between two points given as numpy arrays.
     d = rA - rB
-    dist = np.linalg.norm(d)
+    dist: np.floating = np.linalg.norm(d)
     return dist
 
 
@@ -19,10 +41,10 @@ def open_pdb(f_loc):
         data = f.readlines()
     c = []
     sym = []
-    for l in data:
-        if "ATOM" in l[0:6] or "HETATM" in l[0:6]:
+    for line in data:
+        if "ATOM" in line[0:6] or "HETATM" in line[0:6]:
             sym.append(l[76:79].strip())
-            c2 = [float(x) for x in l[30:55].split()]
+            c2 = [float(x) for x in line[30:55].split()]
             c.append(c2)
     coords = np.array(c)
     return sym, coords
