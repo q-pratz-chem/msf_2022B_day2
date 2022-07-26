@@ -26,7 +26,7 @@ def calculate_distance(rA: np.ndarray, rB: np.ndarray) -> np.floating:
     >>> r1 = np.array([0, 0, 0])
     >>> r2 = np.array([0, 1.0, 0])
     >>> calculate_distance(r1, r2)
-
+    2.0
     
     '''
     # This function calculates the distance between two points given as numpy arrays.
@@ -173,6 +173,9 @@ def bond_histogram(bond_list, save_location=None, dpi=300, graph_min=0, graph_ma
 
 
 def build_bond_list(coordinates, max_bond=1.5, min_bond=0):
+ 
+    if min_bond < 0:
+        raise ValueError("Minimum bond length must be gerater to or equal to 0")
 
     # Find the bonds in a molecule (set of coordinates) based on distance criteria.
     bonds = {}
